@@ -26,8 +26,6 @@ public class MainActivity extends Activity {
     TextView textView2 = null;
     TextView textView3 = null;
     List<Sensor> list;
-    List<Sensor> list1;
-    List<Sensor> list2;
 
 
 
@@ -68,9 +66,9 @@ public class MainActivity extends Activity {
         textView2 = (TextView)findViewById(R.id.textView2);
         textView3 = (TextView)findViewById(R.id.textView3);
 
-        list = sm.getSensorList(Sensor.TYPE_ACCELEROMETER);
-        list1 = sm.getSensorList(Sensor.TYPE_GYROSCOPE);
-        list2 = sm.getSensorList(Sensor.TYPE_LINEAR_ACCELERATION);
+
+
+        list = sm.getSensorList(Sensor.TYPE_ALL);
         if(list.size() > 0) {
             sm.registerListener(sel, (Sensor) list.get(0), SensorManager.SENSOR_DELAY_NORMAL);
         }
@@ -78,20 +76,21 @@ public class MainActivity extends Activity {
             Toast.makeText(getBaseContext(), "Error: No Accelerometer.", Toast.LENGTH_LONG).show();
 
         }
-        if(list1.size() > 0) {
-            sm.registerListener(sel, (Sensor) list.get(0), SensorManager.SENSOR_DELAY_NORMAL);
+        if(list.size() > 0) {
+            sm.registerListener(sel, (Sensor) list.get(2), SensorManager.SENSOR_DELAY_NORMAL);
         }
         else{
-            Toast.makeText(getBaseContext(), "Error: No Accelerometer.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "Error: No Linear Acceleration.", Toast.LENGTH_LONG).show();
 
         }
-        if(list2.size() > 0) {
-            sm.registerListener(sel, (Sensor) list.get(0), SensorManager.SENSOR_DELAY_NORMAL);
+        if(list.size() > 0) {
+            sm.registerListener(sel, (Sensor) list.get(1), SensorManager.SENSOR_DELAY_NORMAL);
         }
         else{
-            Toast.makeText(getBaseContext(), "Error: No Accelerometer.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "Error: No Gyroscope.", Toast.LENGTH_LONG).show();
 
         }
+
 
     }
 
