@@ -21,6 +21,8 @@ import java.util.List;
 
 public class MainActivity extends Activity {
 
+    private float[] gravity = new float[3];
+    private float[] linear_acceleration = new float[3];
     SensorManager sm = null;
     TextView textView1 = null;
     TextView textView2 = null;
@@ -28,23 +30,34 @@ public class MainActivity extends Activity {
     List<Sensor> list;
 
 
-
-    SensorEventListener sel = new SensorEventListener() {
+    final SensorEventListener sel = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
             Sensor sensor = event.sensor;
             if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
                 float[] values = event.values;
-                textView1.setText("x: "+values[0]+"\ny:"+values[1]+"\nz: "+values[2]);
+                textView1.setText("x: " + values[0] + "\ny:" + values[1] + "\nz: " + values[2]);
             }
             if (sensor.getType() == Sensor.TYPE_GYROSCOPE) {
                 float[] values = event.values;
-                textView2.setText("x: "+values[0]+"\ny:"+values[1]+"\nz: "+values[2]);
+                textView2.setText("x: " + values[0] + "\ny:" + values[1] + "\nz: " + values[2]);
             }
-            if (sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
+            if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
                 float[] values = event.values;
-                textView3.setText("x: "+values[0]+"\ny:"+values[1]+"\nz: "+values[2]);
+
+                final float alpha = 0.8f;
+
+                gravity[0] = alpha * gravity[0] + (1 - alpha) * values[0];
+                gravity[1] = alpha * gravity[1] + (1 - alpha) * values[1];
+                gravity[2] = alpha * gravity[2] + (1 - alpha) * values[2];
+
+                linear_acceleration[0] = values[0] - gravity[0];
+                linear_acceleration[1] = values[1] - gravity[1];
+                linear_acceleration[2] = values[2] - gravity[2];
+
+                textView3.setText("x: " + linear_acceleration[0] + "\ny:" + linear_acceleration[1] + "\nz: " + linear_acceleration[2]);
             }
+
         }
 
         @Override
