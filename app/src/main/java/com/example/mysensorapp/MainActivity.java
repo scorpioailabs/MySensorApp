@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 
@@ -40,7 +41,9 @@ public class MainActivity extends Activity {
             }
             if (sensor.getType() == Sensor.TYPE_GYROSCOPE) {
                 float[] values = event.values;
-                textView2.setText("x: " + values[0] + "\ny:" + values[1] + "\nz: " + values[2]);
+                DecimalFormat df = new DecimalFormat();
+                df.setMaximumFractionDigits(2);
+                textView2.setText("x: " + df.format(values[0]) + "\ny:" + df.format(values[1]) + "\nz: " + df.format(values[2]));
             }
             if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
                 float[] values = event.values;
